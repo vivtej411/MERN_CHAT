@@ -34,7 +34,7 @@ const SideDrawer = () => {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [loadingChat, setLoadingChat] = useState();
+  const [loadingChat, setLoadingChat] = useState(false);
   const history = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -71,7 +71,7 @@ const SideDrawer = () => {
         },
       };
       const { data } = await axios.get(`/api/user?search=${search}`, config);
-      console.log(data);
+      // console.log(data);
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -98,7 +98,7 @@ const SideDrawer = () => {
       };
 
       const { data } = await axios.post("/api/chat", { userId }, config);
-      console.log(data);
+      // console.log(data);
       setSelectedChat(data);
       setLoadingChat(false);
       onClose();

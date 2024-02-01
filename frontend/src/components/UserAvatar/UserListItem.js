@@ -6,7 +6,7 @@ const UserListItem = ({ user, handleFunction }) => {
   return (
     <Box
       onClick={() => {
-        console.log(user._id);
+        // console.log(user._id);
         handleFunction(user._id);
       }}
       cursor="pointer"
