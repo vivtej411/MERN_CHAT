@@ -192,6 +192,60 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
     } catch (error) {}
   };
 
+  const handleLeave = async (user1) => {
+    if (selectedChat.groupAdmin._id === user._id) {
+      try {
+        setLoading(true);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+        const { data } = await axios.put(
+          `/api/chat/groupremove`,
+          {
+            chatId: selectedChat._id,
+            userId: user1._id,
+          },
+          config
+        );
+        user1._id === user._id ? setSelectedChat() : setSelectedChat(data);
+        setFetchAgain(!fetchAgain);
+        fetchMessages();
+        setLoading(false);
+      } catch (error) {
+        toast({
+          title: "Error while deleting the group",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
+        return;
+      }
+    }
+    try {
+      setLoading(true);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await axios.put(
+        `/api/chat/groupremove`,
+        {
+          chatId: selectedChat._id,
+          userId: user1._id,
+        },
+        config
+      );
+      user1._id === user._id ? setSelectedChat() : setSelectedChat(data);
+      setFetchAgain(!fetchAgain);
+      fetchMessages();
+      setLoading(false);
+    } catch (error) {}
+  };
+
   return (
     <>
       <IconButton
@@ -261,7 +315,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={() => handleRemove(user)} colorScheme="red">
+            <Button onClick={() => handleLeave(user)} colorScheme="red">
               Leave Group
             </Button>
           </ModalFooter>

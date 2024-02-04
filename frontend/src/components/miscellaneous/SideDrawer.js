@@ -29,6 +29,8 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import ChatLoading from "../ChatLoading";
 import UserListItem from "../UserAvatar/UserListItem";
+import { getSender } from "../../config/ChatLogic";
+import NotificationBadge, { Effect } from "react-notification-badge";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -98,6 +100,7 @@ const SideDrawer = () => {
       };
 
       const { data } = await axios.post("/api/chat", { userId }, config);
+      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       // console.log(data);
       setSelectedChat(data);
       setLoadingChat(false);
@@ -141,11 +144,36 @@ const SideDrawer = () => {
         <div>
           <Menu>
             <MenuButton as={Button} bg={"white"}>
+              <NotificationBadge
+                count={notification.length}
+                effect={Effect.SCALE}
+              ></NotificationBadge>
               <NotificationsNoneOutlinedIcon
-                style={{ margin: "auto", padding: "auto" }}
+                style={{
+                  margin: "auto",
+                  marginRight: "5px",
+                  marginTop: "7px",
+                }}
               ></NotificationsNoneOutlinedIcon>
             </MenuButton>
-            {/* <MenuList></MenuList> */}
+            <MenuList pl={2}>
+              {!notification.length && "No New Messages"}
+              {notification.map((notif) => {
+                return (
+                  <MenuItem
+                    key={notif._id}
+                    onClick={() => {
+                      setSelectedChat(notif.chat);
+                      setNotification(notification.filter((n) => n !== notif));
+                    }}
+                  >
+                    {notif.chat.isGroupChat
+                      ? `New Message in ${notif.chat.chatName}`
+                      : `New Message from ${getSender(user, notif.chat.users)}`}
+                  </MenuItem>
+                );
+              })}
+            </MenuList>
           </Menu>
           <Menu>
             <MenuButton
