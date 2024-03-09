@@ -86,7 +86,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
 
-  console.log(notification);
+  // console.log(notification);
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -245,21 +245,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               </div>
             )}
             <FormControl onKeyDown={sendMessage} isRequired mt={3}>
-              {isTyping ? (
-                <div>
-                  <Lottie
-                    options={defaultOptions}
-                    width={70}
-                    height={30}
-                    style={{
-                      marginBottom: 0,
-                      marginLeft: 0,
-                    }}
-                  ></Lottie>
-                </div>
-              ) : (
-                <></>
-              )}
               <Input
                 variant={"filled"}
                 bg={"#E0E0E0"}
