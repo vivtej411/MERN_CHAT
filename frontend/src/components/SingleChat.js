@@ -18,7 +18,7 @@ import ScrollableChat from "./ScrollableChat";
 import "./styles.css";
 import animationData from "../animations/Typing.json";
 import io from "socket.io-client";
-const ENDPOINT = `http://${process.env.REACT_APP_IP_ADD}:5000`;
+const ENDPOINT = `http://localhost:5000`;
 console.log(ENDPOINT);
 var socket, selectedChatCompare;
 
